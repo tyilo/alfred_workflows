@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>bundleid</key>
+	<string>com.tyilo.alfred.pass</string>
+	<key>category</key>
+	<string>Tools</string>
+	<key>connections</key>
+	<dict>
+		<key>1E6ADD03-EBDD-424F-BF2E-B427529B46EC</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>825452EA-3A0B-4E0E-A353-6BF7D3CE050F</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+			</dict>
+		</array>
+		<key>68C301D0-A164-4929-9B8F-54C410749904</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>1E6ADD03-EBDD-424F-BF2E-B427529B46EC</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+			</dict>
+		</array>
+		<key>C4C1755F-37A5-48DD-B69F-4699368B4915</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>E75D4340-6165-4892-A54F-73634D5BA292</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+			</dict>
+		</array>
+		<key>E75D4340-6165-4892-A54F-73634D5BA292</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>825452EA-3A0B-4E0E-A353-6BF7D3CE050F</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+			</dict>
+		</array>
+	</dict>
+	<key>createdby</key>
+	<string>Tyilo</string>
+	<key>description</key>
+	<string>Copy and generate passwords for http://www.passwordstore.org/</string>
+	<key>disabled</key>
+	<false/>
+	<key>name</key>
+	<string>Pass</string>
+	<key>objects</key>
+	<array>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argumenttype</key>
+				<integer>1</integer>
+				<key>escaping</key>
+				<integer>127</integer>
+				<key>keyword</key>
+				<string>pass</string>
+				<key>queuedelaycustom</key>
+				<integer>1</integer>
+				<key>queuedelayimmediatelyinitially</key>
+				<false/>
+				<key>queuedelaymode</key>
+				<integer>0</integer>
+				<key>queuemode</key>
+				<integer>1</integer>
+				<key>script</key>
+				<string>cat &lt;&lt;EOF
+&lt;?xml version="1.0"?&gt;
+&lt;items&gt;
+EOF
+
+q={query}
+
+cd ~/.password-store
+
+for f in *; do
+	n=${f%.gpg}
+	if [[ $n = *$q* ]]; then
+		cat &lt;&lt;EOF
+			&lt;item arg="$n" valid="YES"&gt;
+				&lt;title&gt;$n&lt;/title&gt;
+				&lt;subtitle&gt;Paste password&lt;/subtitle&gt;
+			&lt;/item&gt;
+EOF
+	fi
+done
+
+cat &lt;&lt;EOF
+&lt;/items&gt;
+EOF</string>
+				<key>title</key>
+				<string>pass</string>
+				<key>type</key>
+				<integer>0</integer>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.scriptfilter</string>
+			<key>uid</key>
+			<string>C4C1755F-37A5-48DD-B69F-4699368B4915</string>
+			<key>version</key>
+			<integer>0</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>concurrently</key>
+				<false/>
+				<key>escaping</key>
+				<integer>127</integer>
+				<key>script</key>
+				<string>source ~/.bashrc
+p=$(pass show {query})
+echo -n "$p"</string>
+				<key>type</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>E75D4340-6165-4892-A54F-73634D5BA292</string>
+			<key>version</key>
+			<integer>0</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>autopaste</key>
+				<true/>
+				<key>clipboardtext</key>
+				<string>{query}</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.output.clipboard</string>
+			<key>uid</key>
+			<string>825452EA-3A0B-4E0E-A353-6BF7D3CE050F</string>
+			<key>version</key>
+			<integer>0</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>concurrently</key>
+				<false/>
+				<key>escaping</key>
+				<integer>126</integer>
+				<key>script</key>
+				<string>source ~/.bashrc
+
+args=({query})
+
+p=$(pass generate "${args[@]}")
+
+# Remove color codes
+echo -n "$p" | gsed -r "s/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[m|K]//g" | tail -c "${args[${#args[@]} - 1]}"</string>
+				<key>type</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>1E6ADD03-EBDD-424F-BF2E-B427529B46EC</string>
+			<key>version</key>
+			<integer>0</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argumenttype</key>
+				<integer>0</integer>
+				<key>escaping</key>
+				<integer>126</integer>
+				<key>keyword</key>
+				<string>passgen</string>
+				<key>queuedelaycustom</key>
+				<integer>1</integer>
+				<key>queuedelayimmediatelyinitially</key>
+				<false/>
+				<key>queuedelaymode</key>
+				<integer>0</integer>
+				<key>queuemode</key>
+				<integer>1</integer>
+				<key>script</key>
+				<string>cat &lt;&lt;EOF
+&lt;?xml version="1.0"?&gt;
+&lt;items&gt;
+EOF
+
+q=({query})
+
+cd ~/.password-store
+
+if [[ ${#q[@]} -lt 2 ]]; then
+	cat &lt;&lt;EOF
+			&lt;item valid="NO"&gt;
+				&lt;title&gt;Invalid command&lt;/title&gt;
+				&lt;subtitle&gt;Usage: passgen [options] name length&lt;/subtitle&gt;
+			&lt;/item&gt;
+EOF
+else
+	cat &lt;&lt;EOF
+			&lt;item arg="${q[*]}" valid="YES"&gt;
+				&lt;title&gt;pass generate ${q[*]}&lt;/title&gt;
+				&lt;subtitle&gt;Paste password&lt;/subtitle&gt;
+			&lt;/item&gt;
+EOF
+fi
+
+for f in *; do
+	n=${f%.gpg}
+	if [[ $n = *$q* ]]; then
+		cat &lt;&lt;EOF
+			&lt;item arg="$n" valid="YES"&gt;
+				&lt;title&gt;$n&lt;/title&gt;
+				&lt;subtitle&gt;Paste password&lt;/subtitle&gt;
+			&lt;/item&gt;
+EOF
+	fi
+done
+
+cat &lt;&lt;EOF
+&lt;/items&gt;
+EOF</string>
+				<key>subtext</key>
+				<string>Usage: passgen [options] name length</string>
+				<key>title</key>
+				<string>passgen</string>
+				<key>type</key>
+				<integer>0</integer>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.scriptfilter</string>
+			<key>uid</key>
+			<string>68C301D0-A164-4929-9B8F-54C410749904</string>
+			<key>version</key>
+			<integer>0</integer>
+		</dict>
+	</array>
+	<key>readme</key>
+	<string></string>
+	<key>uidata</key>
+	<dict>
+		<key>1E6ADD03-EBDD-424F-BF2E-B427529B46EC</key>
+		<dict>
+			<key>ypos</key>
+			<real>130</real>
+		</dict>
+		<key>68C301D0-A164-4929-9B8F-54C410749904</key>
+		<dict>
+			<key>ypos</key>
+			<real>130</real>
+		</dict>
+		<key>825452EA-3A0B-4E0E-A353-6BF7D3CE050F</key>
+		<dict>
+			<key>ypos</key>
+			<real>70</real>
+		</dict>
+		<key>C4C1755F-37A5-48DD-B69F-4699368B4915</key>
+		<dict>
+			<key>ypos</key>
+			<real>10</real>
+		</dict>
+		<key>E75D4340-6165-4892-A54F-73634D5BA292</key>
+		<dict>
+			<key>ypos</key>
+			<real>10</real>
+		</dict>
+	</dict>
+	<key>webaddress</key>
+	<string>http://tyilo.com/</string>
+</dict>
+</plist>

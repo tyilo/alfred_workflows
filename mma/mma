@@ -1,0 +1,5 @@
+#!/Applications/Mathematica.app/Contents/MacOS/MathKernel -script
+
+value=ToExpression[Last@$CommandLine];
+
+Print[value];

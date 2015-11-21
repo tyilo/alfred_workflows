@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>bundleid</key>
+	<string>com.tyilo.alfred.ip-address</string>
+	<key>connections</key>
+	<dict>
+		<key>4BEBE2B1-3D42-4D2E-BB6D-9C4C17285EFC</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>75E75F29-9D5F-490E-B1AD-13EAC1343CDF</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+			</dict>
+		</array>
+	</dict>
+	<key>createdby</key>
+	<string>Tyilo</string>
+	<key>description</key>
+	<string>Shows your local and public IP-address</string>
+	<key>disabled</key>
+	<false/>
+	<key>name</key>
+	<string>Show IP-address</string>
+	<key>objects</key>
+	<array>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>autopaste</key>
+				<false/>
+				<key>clipboardtext</key>
+				<string>{query}</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.output.clipboard</string>
+			<key>uid</key>
+			<string>75E75F29-9D5F-490E-B1AD-13EAC1343CDF</string>
+			<key>version</key>
+			<integer>0</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argumenttype</key>
+				<integer>2</integer>
+				<key>escaping</key>
+				<integer>127</integer>
+				<key>keyword</key>
+				<string>ip</string>
+				<key>queuedelaycustom</key>
+				<integer>1</integer>
+				<key>queuedelayimmediatelyinitially</key>
+				<false/>
+				<key>queuedelaymode</key>
+				<integer>0</integer>
+				<key>queuemode</key>
+				<integer>1</integer>
+				<key>script</key>
+				<string>interface=$(route get tyilo.com | awk '/interface/ { print $2 }')
+local=$(ifconfig "$interface" | awk '/inet / { print $2 }')
+public=$(curl -s "http://tyilo.com/ip/")
+
+cat &lt;&lt;EOF
+&lt;?xml version="1.0"?&gt;
+&lt;items&gt;
+	&lt;item arg="$local" valid="YES"&gt;
+		&lt;title&gt;$local&lt;/title&gt;
+		&lt;subtitle&gt;Local&lt;/subtitle&gt;
+	&lt;/item&gt;
+	&lt;item arg="$public" valid="YES"&gt;
+		&lt;title&gt;$public&lt;/title&gt;
+		&lt;subtitle&gt;Public&lt;/subtitle&gt;
+	&lt;/item&gt;
+&lt;/items&gt;
+EOF </string>
+				<key>title</key>
+				<string>IP address</string>
+				<key>type</key>
+				<integer>0</integer>
+				<key>withspace</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.scriptfilter</string>
+			<key>uid</key>
+			<string>4BEBE2B1-3D42-4D2E-BB6D-9C4C17285EFC</string>
+			<key>version</key>
+			<integer>0</integer>
+		</dict>
+	</array>
+	<key>readme</key>
+	<string></string>
+	<key>uidata</key>
+	<dict>
+		<key>4BEBE2B1-3D42-4D2E-BB6D-9C4C17285EFC</key>
+		<dict>
+			<key>ypos</key>
+			<real>10</real>
+		</dict>
+		<key>75E75F29-9D5F-490E-B1AD-13EAC1343CDF</key>
+		<dict>
+			<key>ypos</key>
+			<real>10</real>
+		</dict>
+	</dict>
+	<key>webaddress</key>
+	<string>http://tyilo.com/</string>
+</dict>
+</plist>

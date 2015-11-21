@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>bundleid</key>
+	<string>com.tyilo.alfred.app-info</string>
+	<key>connections</key>
+	<dict>
+		<key>1548CE0E-803E-44F6-848B-FE33C9018A9A</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>55796B4E-CF80-4F57-A8BB-347100C01057</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+			</dict>
+		</array>
+		<key>467CC339-538D-43C5-BE74-CF6405BCC1F8</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>55796B4E-CF80-4F57-A8BB-347100C01057</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+			</dict>
+		</array>
+		<key>55796B4E-CF80-4F57-A8BB-347100C01057</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>061B5A08-AC64-4BF5-AB6C-0672B2A4016B</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+			</dict>
+		</array>
+	</dict>
+	<key>createdby</key>
+	<string>Tyilo</string>
+	<key>description</key>
+	<string>Shows the bundle ID and version of an application</string>
+	<key>disabled</key>
+	<false/>
+	<key>name</key>
+	<string>App info</string>
+	<key>objects</key>
+	<array>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>acceptsmulti</key>
+				<false/>
+				<key>filetypes</key>
+				<array>
+					<string>com.apple.application-bundle</string>
+				</array>
+				<key>name</key>
+				<string>App info</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.trigger.action</string>
+			<key>uid</key>
+			<string>1548CE0E-803E-44F6-848B-FE33C9018A9A</string>
+			<key>version</key>
+			<integer>0</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>concurrently</key>
+				<false/>
+				<key>escaping</key>
+				<integer>127</integer>
+				<key>script</key>
+				<string>get_value () {
+	/usr/libexec/PlistBuddy -c "Print $1" Info.plist
+}
+
+app={query}
+cd "$app/Contents"
+
+id=$(get_value CFBundleIdentifier)
+version=$(get_value CFBundleShortVersionString)
+
+out="Id: $id\nVersion: $version"
+
+echo -n -e "$out"
+echo -n -e "$out" | pbcopy</string>
+				<key>type</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>55796B4E-CF80-4F57-A8BB-347100C01057</string>
+			<key>version</key>
+			<integer>0</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>lastpathcomponent</key>
+				<false/>
+				<key>onlyshowifquerypopulated</key>
+				<false/>
+				<key>output</key>
+				<integer>0</integer>
+				<key>removeextension</key>
+				<false/>
+				<key>sticky</key>
+				<false/>
+				<key>text</key>
+				<string>{query}</string>
+				<key>title</key>
+				<string>App info</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.output.notification</string>
+			<key>uid</key>
+			<string>061B5A08-AC64-4BF5-AB6C-0672B2A4016B</string>
+			<key>version</key>
+			<integer>0</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>anchorfields</key>
+				<true/>
+				<key>daterange</key>
+				<integer>0</integer>
+				<key>fields</key>
+				<array>
+					<dict>
+						<key>field</key>
+						<string>kMDItemDisplayName</string>
+						<key>not</key>
+						<false/>
+						<key>split</key>
+						<true/>
+						<key>value</key>
+						<string>{query}</string>
+						<key>words</key>
+						<true/>
+					</dict>
+					<dict>
+						<key>field</key>
+						<string>kMDItemAlternateNames</string>
+						<key>not</key>
+						<false/>
+						<key>split</key>
+						<true/>
+						<key>value</key>
+						<string>{query}</string>
+						<key>words</key>
+						<true/>
+					</dict>
+					<dict>
+						<key>field</key>
+						<string>kMDItemFinderComment</string>
+						<key>not</key>
+						<false/>
+						<key>split</key>
+						<true/>
+						<key>value</key>
+						<string>{query}</string>
+						<key>words</key>
+						<true/>
+					</dict>
+				</array>
+				<key>includesystem</key>
+				<true/>
+				<key>keyword</key>
+				<string>info</string>
+				<key>scopes</key>
+				<array/>
+				<key>title</key>
+				<string>App info</string>
+				<key>types</key>
+				<array>
+					<string>com.apple.application-bundle</string>
+				</array>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.filefilter</string>
+			<key>uid</key>
+			<string>467CC339-538D-43C5-BE74-CF6405BCC1F8</string>
+			<key>version</key>
+			<integer>0</integer>
+		</dict>
+	</array>
+	<key>readme</key>
+	<string></string>
+	<key>uidata</key>
+	<dict>
+		<key>061B5A08-AC64-4BF5-AB6C-0672B2A4016B</key>
+		<dict>
+			<key>ypos</key>
+			<real>140</real>
+		</dict>
+		<key>1548CE0E-803E-44F6-848B-FE33C9018A9A</key>
+		<dict>
+			<key>ypos</key>
+			<real>140</real>
+		</dict>
+		<key>467CC339-538D-43C5-BE74-CF6405BCC1F8</key>
+		<dict>
+			<key>ypos</key>
+			<real>260</real>
+		</dict>
+		<key>55796B4E-CF80-4F57-A8BB-347100C01057</key>
+		<dict>
+			<key>ypos</key>
+			<real>140</real>
+		</dict>
+	</dict>
+	<key>webaddress</key>
+	<string>http://tyilo.com/</string>
+</dict>
+</plist>

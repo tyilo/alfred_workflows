@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>bundleid</key>
+	<string>com.tyilo.alfred.unicode</string>
+	<key>connections</key>
+	<dict>
+		<key>013BB4F6-D270-4431-80A2-9D978E124903</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>2C480F65-A3F7-4A1F-AD8C-C66FA5679632</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+			</dict>
+		</array>
+		<key>06980022-D0CB-40AA-9A82-FF12D715CE79</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>2C480F65-A3F7-4A1F-AD8C-C66FA5679632</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+			</dict>
+		</array>
+		<key>2C480F65-A3F7-4A1F-AD8C-C66FA5679632</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>2A634F43-8F9C-450D-AFD1-EBF848E1E70B</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+			</dict>
+		</array>
+	</dict>
+	<key>createdby</key>
+	<string>Tyilo</string>
+	<key>description</key>
+	<string>Copy unicode characters from their code point or description</string>
+	<key>disabled</key>
+	<false/>
+	<key>name</key>
+	<string>Unicode</string>
+	<key>objects</key>
+	<array>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argumenttype</key>
+				<integer>0</integer>
+				<key>escaping</key>
+				<integer>68</integer>
+				<key>keyword</key>
+				<string>unicode</string>
+				<key>queuedelaycustom</key>
+				<integer>3</integer>
+				<key>queuedelayimmediatelyinitially</key>
+				<false/>
+				<key>queuedelaymode</key>
+				<integer>0</integer>
+				<key>queuemode</key>
+				<integer>1</integer>
+				<key>runningsubtext</key>
+				<string>...</string>
+				<key>script</key>
+				<string>import sys
+import cgi
+import unicodedata
+
+try:
+	n = int(u"{query}", 0)
+	c = unichr(n)
+except Exception:
+	print """
+&lt;?xml version="1.0"?&gt;
+&lt;items&gt;
+	&lt;item valid="NO"&gt;
+		&lt;title&gt;Error!&lt;/title&gt;
+		&lt;subtitle&gt;Action this item to copy this number to the clipboard&lt;/subtitle&gt;
+		&lt;icon type="fileicon"&gt;/Applications/TextEdit.app&lt;/icon&gt;
+	&lt;/item&gt;
+&lt;/items&gt;
+"""
+	sys.exit(0)
+
+try:
+	name = unicodedata.name(c)
+except Exception:
+	name = '???'
+
+escaped = cgi.escape(c)
+if n &lt; 0x20:
+	escaped = ''
+
+print u"""
+&lt;?xml version="1.0"?&gt;
+&lt;items&gt;
+	&lt;item arg="{}" valid="YES"&gt;
+		&lt;title&gt;{}: {}&lt;/title&gt;
+		&lt;subtitle&gt;Action this item to copy this number to the clipboard&lt;/subtitle&gt;
+		&lt;icon type="fileicon"&gt;/Applications/TextEdit.app&lt;/icon&gt;
+	&lt;/item&gt;
+&lt;/items&gt;
+""".format(n, name, cgi.escape(escaped)).encode('utf-8')</string>
+				<key>subtext</key>
+				<string>Action this item to copy this number to the clipboard</string>
+				<key>title</key>
+				<string>unicode</string>
+				<key>type</key>
+				<integer>3</integer>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.scriptfilter</string>
+			<key>uid</key>
+			<string>06980022-D0CB-40AA-9A82-FF12D715CE79</string>
+			<key>version</key>
+			<integer>0</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>concurrently</key>
+				<false/>
+				<key>escaping</key>
+				<integer>68</integer>
+				<key>script</key>
+				<string>import sys
+
+n = int(u"{query}")
+c = unichr(n)
+
+sys.stdout.write(c.encode('utf-8'))</string>
+				<key>type</key>
+				<integer>3</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>2C480F65-A3F7-4A1F-AD8C-C66FA5679632</string>
+			<key>version</key>
+			<integer>0</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>autopaste</key>
+				<true/>
+				<key>clipboardtext</key>
+				<string>{query}</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.output.clipboard</string>
+			<key>uid</key>
+			<string>2A634F43-8F9C-450D-AFD1-EBF848E1E70B</string>
+			<key>version</key>
+			<integer>0</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argumenttype</key>
+				<integer>0</integer>
+				<key>escaping</key>
+				<integer>68</integer>
+				<key>keyword</key>
+				<string>unicodelookup</string>
+				<key>queuedelaycustom</key>
+				<integer>3</integer>
+				<key>queuedelayimmediatelyinitially</key>
+				<false/>
+				<key>queuedelaymode</key>
+				<integer>0</integer>
+				<key>queuemode</key>
+				<integer>1</integer>
+				<key>runningsubtext</key>
+				<string>...</string>
+				<key>script</key>
+				<string>import sys
+import cgi
+import unicodedata
+
+limit = 20
+
+name = u"{query}".upper()
+
+names = {}
+
+for i in range(0x10000):
+	c = unichr(i)
+	try:
+		n = unicodedata.name(c)
+		names[n] = i
+	except Exception:
+		pass
+
+keys = names.keys()
+l1 = filter(lambda n: n.startswith(name), keys)
+l2 = filter(lambda n: not n.startswith(name) and n.find(name) != -1, keys)
+
+l = (l1[:limit] + l2[:limit])[:limit]
+
+print """
+&lt;?xml version="1.0"?&gt;
+&lt;items&gt;
+"""
+
+for n in l:
+	i = names[n]
+	c = unichr(i)
+	escaped = cgi.escape(c)
+	if i &lt; 0x20:
+		escaped = ''
+	
+	print u"""
+	&lt;item arg="{}" valid="YES"&gt;
+		&lt;title&gt;{}: {}&lt;/title&gt;
+		&lt;subtitle&gt;Action this item to copy this number to the clipboard&lt;/subtitle&gt;
+		&lt;icon type="fileicon"&gt;/Applications/TextEdit.app&lt;/icon&gt;
+	&lt;/item&gt;
+""".format(i, n, c).encode('utf-8')
+
+print """
+&lt;/items&gt;
+"""</string>
+				<key>subtext</key>
+				<string>Action this item to copy this number to the clipboard</string>
+				<key>title</key>
+				<string>unicodelookup</string>
+				<key>type</key>
+				<integer>3</integer>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.scriptfilter</string>
+			<key>uid</key>
+			<string>013BB4F6-D270-4431-80A2-9D978E124903</string>
+			<key>version</key>
+			<integer>0</integer>
+		</dict>
+	</array>
+	<key>readme</key>
+	<string></string>
+	<key>uidata</key>
+	<dict>
+		<key>013BB4F6-D270-4431-80A2-9D978E124903</key>
+		<dict>
+			<key>ypos</key>
+			<real>140</real>
+		</dict>
+		<key>06980022-D0CB-40AA-9A82-FF12D715CE79</key>
+		<dict>
+			<key>ypos</key>
+			<real>10</real>
+		</dict>
+		<key>2A634F43-8F9C-450D-AFD1-EBF848E1E70B</key>
+		<dict>
+			<key>ypos</key>
+			<real>70</real>
+		</dict>
+		<key>2C480F65-A3F7-4A1F-AD8C-C66FA5679632</key>
+		<dict>
+			<key>ypos</key>
+			<real>70</real>
+		</dict>
+	</dict>
+	<key>webaddress</key>
+	<string>http://tyilo.com/</string>
+</dict>
+</plist>

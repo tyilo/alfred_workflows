@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>bundleid</key>
+	<string>com.tyilo.alfred.python-evaluate</string>
+	<key>category</key>
+	<string>Tools</string>
+	<key>connections</key>
+	<dict>
+		<key>E9E5D9DD-9A66-4D23-855F-49CE147DDBA1</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>12B50EF6-AB28-4D21-AA75-821FC9E9057B</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+			</dict>
+		</array>
+	</dict>
+	<key>createdby</key>
+	<string>Tyilo</string>
+	<key>description</key>
+	<string>Evaluate a python expression inside Alfred</string>
+	<key>disabled</key>
+	<false/>
+	<key>name</key>
+	<string>Python evaluate</string>
+	<key>objects</key>
+	<array>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argumenttype</key>
+				<integer>0</integer>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>keyword</key>
+				<string>py</string>
+				<key>queuedelaycustom</key>
+				<integer>1</integer>
+				<key>queuedelayimmediatelyinitially</key>
+				<false/>
+				<key>queuedelaymode</key>
+				<integer>0</integer>
+				<key>queuemode</key>
+				<integer>1</integer>
+				<key>script</key>
+				<string>query="{query}"
+
+valid="YES"
+res=$( { /usr/local/bin/python -mpythonpy -c 'from math import *' "$query"; } 2&gt;&amp;1)
+
+if [[ $? -ne 0 ]]; then
+	res=$(tail -1 &lt;&lt;&lt; "$res")
+	valid="NO"
+fi
+
+escaped=$(sed -e 's/\&amp;/\&amp;amp;/g' -e 's/&lt;/\&amp;lt;/g' -e 's/&gt;/\&amp;gt;/g' -e 's/"/\&amp;quot;/g' &lt;&lt;&lt; "$res")
+
+cat &lt;&lt;EOF
+&lt;?xml version="1.0"?&gt;
+&lt;items&gt;
+	&lt;item arg="$escaped" valid="$valid"&gt;
+		&lt;title&gt;$escaped&lt;/title&gt;
+		&lt;subtitle&gt;Action this item to copy this number to the clipboard&lt;/subtitle&gt;
+	&lt;/item&gt;
+&lt;/items&gt;
+EOF</string>
+				<key>title</key>
+				<string>Evaluate python</string>
+				<key>type</key>
+				<integer>0</integer>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.scriptfilter</string>
+			<key>uid</key>
+			<string>E9E5D9DD-9A66-4D23-855F-49CE147DDBA1</string>
+			<key>version</key>
+			<integer>0</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>autopaste</key>
+				<false/>
+				<key>clipboardtext</key>
+				<string>{query}</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.output.clipboard</string>
+			<key>uid</key>
+			<string>12B50EF6-AB28-4D21-AA75-821FC9E9057B</string>
+			<key>version</key>
+			<integer>0</integer>
+		</dict>
+	</array>
+	<key>readme</key>
+	<string></string>
+	<key>uidata</key>
+	<dict>
+		<key>12B50EF6-AB28-4D21-AA75-821FC9E9057B</key>
+		<dict>
+			<key>ypos</key>
+			<real>10</real>
+		</dict>
+		<key>E9E5D9DD-9A66-4D23-855F-49CE147DDBA1</key>
+		<dict>
+			<key>ypos</key>
+			<real>10</real>
+		</dict>
+	</dict>
+	<key>webaddress</key>
+	<string>http://tyilo.com/</string>
+</dict>
+</plist>

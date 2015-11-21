@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>bundleid</key>
+	<string>com.tyilo.alfred.download</string>
+	<key>connections</key>
+	<dict>
+		<key>7D8939E1-52EB-4EA0-A8BE-04B64681F0CD</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>D6D1F351-7F6C-4926-86DA-292121F619B6</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+			</dict>
+		</array>
+		<key>867D8088-2A25-4F45-B397-87D41777D710</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>7D8939E1-52EB-4EA0-A8BE-04B64681F0CD</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+			</dict>
+		</array>
+	</dict>
+	<key>createdby</key>
+	<string>Tyilo</string>
+	<key>description</key>
+	<string>Downloads the contents of an URL to a temporary directory and copies the path to the clipboard</string>
+	<key>disabled</key>
+	<false/>
+	<key>name</key>
+	<string>Download</string>
+	<key>objects</key>
+	<array>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>concurrently</key>
+				<false/>
+				<key>escaping</key>
+				<integer>100</integer>
+				<key>script</key>
+				<string>tmp="$(mktemp -t 'download-alfred')"
+curl -o "$tmp" -- "{query}"
+mimetype="$(file -b --mime-type "$tmp")"
+ext="$(grep "$mimetype" /etc/apache2/mime.types | awk '{ print $2 }')"
+newname="$tmp.$ext"
+mv "$tmp" "$newname"
+
+echo -n "$newname" | pbcopy
+echo Saved succesfully at "$newname"</string>
+				<key>type</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>7D8939E1-52EB-4EA0-A8BE-04B64681F0CD</string>
+			<key>version</key>
+			<integer>0</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>lastpathcomponent</key>
+				<false/>
+				<key>onlyshowifquerypopulated</key>
+				<false/>
+				<key>output</key>
+				<integer>0</integer>
+				<key>removeextension</key>
+				<false/>
+				<key>sticky</key>
+				<false/>
+				<key>text</key>
+				<string>{query}</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.output.notification</string>
+			<key>uid</key>
+			<string>D6D1F351-7F6C-4926-86DA-292121F619B6</string>
+			<key>version</key>
+			<integer>0</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argumenttype</key>
+				<integer>0</integer>
+				<key>keyword</key>
+				<string>download</string>
+				<key>subtext</key>
+				<string>Download URL contents to TMPDIR</string>
+				<key>text</key>
+				<string>Download URL</string>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.keyword</string>
+			<key>uid</key>
+			<string>867D8088-2A25-4F45-B397-87D41777D710</string>
+			<key>version</key>
+			<integer>0</integer>
+		</dict>
+	</array>
+	<key>readme</key>
+	<string></string>
+	<key>uidata</key>
+	<dict>
+		<key>7D8939E1-52EB-4EA0-A8BE-04B64681F0CD</key>
+		<dict>
+			<key>ypos</key>
+			<real>10</real>
+		</dict>
+		<key>867D8088-2A25-4F45-B397-87D41777D710</key>
+		<dict>
+			<key>ypos</key>
+			<real>10</real>
+		</dict>
+		<key>D6D1F351-7F6C-4926-86DA-292121F619B6</key>
+		<dict>
+			<key>ypos</key>
+			<real>10</real>
+		</dict>
+	</dict>
+	<key>webaddress</key>
+	<string>http://tyilo.com/</string>
+</dict>
+</plist>

@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>bundleid</key>
+	<string>com.tyilo.alfred.hex</string>
+	<key>connections</key>
+	<dict>
+		<key>76A22511-784C-4C18-BFFA-4BB61C18F47B</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>4C06D56A-B427-4C3C-A733-104E28A68288</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+			</dict>
+		</array>
+		<key>F0096359-A155-4335-BF2D-6DCBA7768B2E</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>4C06D56A-B427-4C3C-A733-104E28A68288</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+			</dict>
+		</array>
+	</dict>
+	<key>createdby</key>
+	<string>Tyilo</string>
+	<key>description</key>
+	<string>Convert a number from decimal to hexadecimal or binary</string>
+	<key>disabled</key>
+	<false/>
+	<key>name</key>
+	<string>Hex/Bin</string>
+	<key>objects</key>
+	<array>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argumenttype</key>
+				<integer>0</integer>
+				<key>escaping</key>
+				<integer>127</integer>
+				<key>keyword</key>
+				<string>hex</string>
+				<key>queuedelaycustom</key>
+				<integer>1</integer>
+				<key>queuedelayimmediatelyinitially</key>
+				<false/>
+				<key>queuedelaymode</key>
+				<integer>0</integer>
+				<key>queuemode</key>
+				<integer>1</integer>
+				<key>runningsubtext</key>
+				<string>...</string>
+				<key>script</key>
+				<string>upper="$(tr '[:lower:]' '[:upper:]' &lt;&lt;&lt; $(({query})))"
+n="0x$(bc &lt;&lt;&lt; "obase=16; $upper" | tr '[:upper:]' '[:lower:]')"
+
+cat &lt;&lt; EOB
+&lt;?xml version="1.0"?&gt;
+&lt;items&gt;
+	&lt;item arg="$n" valid="YES"&gt;
+		&lt;title&gt;$n&lt;/title&gt;
+		&lt;subtitle&gt;Action this item to copy this number to the clipboard&lt;/subtitle&gt;
+		&lt;icon type="fileicon"&gt;/Applications/Calculator.app&lt;/icon&gt;
+	&lt;/item&gt;
+&lt;/items&gt;
+EOB</string>
+				<key>subtext</key>
+				<string>Action this item to copy this number to the clipboard</string>
+				<key>title</key>
+				<string>hex</string>
+				<key>type</key>
+				<integer>0</integer>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.scriptfilter</string>
+			<key>uid</key>
+			<string>F0096359-A155-4335-BF2D-6DCBA7768B2E</string>
+			<key>version</key>
+			<integer>0</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>autopaste</key>
+				<false/>
+				<key>clipboardtext</key>
+				<string>{query}</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.output.clipboard</string>
+			<key>uid</key>
+			<string>4C06D56A-B427-4C3C-A733-104E28A68288</string>
+			<key>version</key>
+			<integer>0</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argumenttype</key>
+				<integer>0</integer>
+				<key>escaping</key>
+				<integer>127</integer>
+				<key>keyword</key>
+				<string>bin</string>
+				<key>queuedelaycustom</key>
+				<integer>1</integer>
+				<key>queuedelayimmediatelyinitially</key>
+				<false/>
+				<key>queuedelaymode</key>
+				<integer>0</integer>
+				<key>queuemode</key>
+				<integer>1</integer>
+				<key>runningsubtext</key>
+				<string>...</string>
+				<key>script</key>
+				<string>upper="$(tr '[:lower:]' '[:upper:]' &lt;&lt;&lt; $(({query})))"
+n="0b$(bc &lt;&lt;&lt; "obase=2; $upper" | tr '[:upper:]' '[:lower:]')"
+
+cat &lt;&lt; EOB
+&lt;?xml version="1.0"?&gt;
+&lt;items&gt;
+	&lt;item arg="$n" valid="YES"&gt;
+		&lt;title&gt;$n&lt;/title&gt;
+		&lt;subtitle&gt;Action this item to copy this number to the clipboard&lt;/subtitle&gt;
+		&lt;icon type="fileicon"&gt;/Applications/Calculator.app&lt;/icon&gt;
+	&lt;/item&gt;
+&lt;/items&gt;
+EOB</string>
+				<key>subtext</key>
+				<string>Action this item to copy this number to the clipboard</string>
+				<key>title</key>
+				<string>bin</string>
+				<key>type</key>
+				<integer>0</integer>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.scriptfilter</string>
+			<key>uid</key>
+			<string>76A22511-784C-4C18-BFFA-4BB61C18F47B</string>
+			<key>version</key>
+			<integer>0</integer>
+		</dict>
+	</array>
+	<key>readme</key>
+	<string></string>
+	<key>uidata</key>
+	<dict>
+		<key>4C06D56A-B427-4C3C-A733-104E28A68288</key>
+		<dict>
+			<key>ypos</key>
+			<real>230</real>
+		</dict>
+		<key>76A22511-784C-4C18-BFFA-4BB61C18F47B</key>
+		<dict>
+			<key>ypos</key>
+			<real>290</real>
+		</dict>
+		<key>F0096359-A155-4335-BF2D-6DCBA7768B2E</key>
+		<dict>
+			<key>ypos</key>
+			<real>170</real>
+		</dict>
+	</dict>
+	<key>webaddress</key>
+	<string>http://tyilo.com/</string>
+</dict>
+</plist>

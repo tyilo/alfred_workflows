@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>bundleid</key>
+	<string>com.tyilo.alfred.mathematica-evaluate</string>
+	<key>category</key>
+	<string>Tools</string>
+	<key>connections</key>
+	<dict>
+		<key>8ADC3563-1C7E-4710-856E-8A9C041FA848</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>12B50EF6-AB28-4D21-AA75-821FC9E9057B</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+			</dict>
+		</array>
+	</dict>
+	<key>createdby</key>
+	<string>Tyilo</string>
+	<key>description</key>
+	<string>Evaluate a Mathematica expression inside Alfred</string>
+	<key>disabled</key>
+	<false/>
+	<key>name</key>
+	<string>Mathematica evaluate</string>
+	<key>objects</key>
+	<array>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argumenttype</key>
+				<integer>0</integer>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>keyword</key>
+				<string>mma</string>
+				<key>queuedelaycustom</key>
+				<integer>3</integer>
+				<key>queuedelayimmediatelyinitially</key>
+				<true/>
+				<key>queuedelaymode</key>
+				<integer>0</integer>
+				<key>queuemode</key>
+				<integer>2</integer>
+				<key>runningsubtext</key>
+				<string>...</string>
+				<key>script</key>
+				<string>query="{query}"
+res=$(./mma "$query")
+cat &lt;&lt;EOF
+&lt;?xml version="1.0"?&gt;
+&lt;items&gt;
+	&lt;item arg="$res" valid="YES"&gt;
+		&lt;title&gt;$res&lt;/title&gt;
+		&lt;subtitle&gt;Action this item to copy this number to the clipboard&lt;/subtitle&gt;
+	&lt;/item&gt;
+&lt;/items&gt;
+EOF</string>
+				<key>title</key>
+				<string>Evaluate Mathematica</string>
+				<key>type</key>
+				<integer>0</integer>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.scriptfilter</string>
+			<key>uid</key>
+			<string>8ADC3563-1C7E-4710-856E-8A9C041FA848</string>
+			<key>version</key>
+			<integer>0</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>autopaste</key>
+				<false/>
+				<key>clipboardtext</key>
+				<string>{query}</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.output.clipboard</string>
+			<key>uid</key>
+			<string>12B50EF6-AB28-4D21-AA75-821FC9E9057B</string>
+			<key>version</key>
+			<integer>0</integer>
+		</dict>
+	</array>
+	<key>readme</key>
+	<string></string>
+	<key>uidata</key>
+	<dict>
+		<key>12B50EF6-AB28-4D21-AA75-821FC9E9057B</key>
+		<dict>
+			<key>ypos</key>
+			<real>130</real>
+		</dict>
+		<key>8ADC3563-1C7E-4710-856E-8A9C041FA848</key>
+		<dict>
+			<key>ypos</key>
+			<real>130</real>
+		</dict>
+	</dict>
+	<key>webaddress</key>
+	<string>http://tyilo.com/</string>
+</dict>
+</plist>
